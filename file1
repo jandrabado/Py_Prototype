@@ -65,7 +65,6 @@ def menu_choice():
                 search_figure()
             elif choice == 6:
                 for figure in figures:
-
                     f.write(str(figure))  # writes to the file
                     f.write(" ")
                 f.close()  # closes the file
@@ -141,7 +140,7 @@ def sort_figure():
                 print("Sorted!")
                 return
             elif choice == 4:
-                print("Sorting by Time and Date - Earliest to Earliest")
+                print("Sorting by Time and Date - Earliest to Latest")
                 figures.sort(key=lambda figures: figures.time, reverse=True)
                 print("Sorted!")
                 return
