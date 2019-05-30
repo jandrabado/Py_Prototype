@@ -1,0 +1,176 @@
+
+# Figure Collection Project
+# Jehanne Andrabado
+
+import datetime
+
+
+class Figure:
+
+    def __init__(self, model, name, time):     # constructor
+        self.type = model
+        self.name = name
+        self.time = time
+
+    def __eq__(self, other):            # equality statement to help for searching
+        return self.type == other.type or self.name == self.name
+
+    def __repr__(self):   # converts the object into a single string that's able to be compared
+        return str(self.type + " " + self.name)
+
+    def __lt__(self, other):
+        return self.type < other.type or self.name < other.name
+
+    def __gt__(self, other):
+        return self.type > other.name or self.name > other.name
+
+    def __del__(self):
+        print("Deleted")
+
+
+def menu_choice():
+
+    while True:
+        try:
+            menu_screen()  # displays the menu
+            choice = int(input("Please make a selection >> "))
+        except ValueError:  # Input validation to make sure that the program doesn't break when garbage input is entered
+            print("**Error**")
+            print("Please enter a valid menu choice")
+        else:
+            if choice == 1:
+                print("Adding a figure")
+                print(30 * "-")
+                print("")
+                add_figure()
+            elif choice == 2:
+                print("Deleting a figure")
+                print(30 * "-")
+                print("")
+                delete_figure()
+            elif choice == 3:
+                print("Sorting the figures")
+                print(30 * "-")
+                print("")
+                sort_figure()
+            elif choice == 4:
+                print("Displaying the list")
+                print(30 * "-")
+                print("")
+                display_figure()
+            elif choice == 5:
+                print("Searching for a figure")
+                print(30 * "-")
+                print("")
+                search_figure()
+            elif choice == 6:
+                for figure in figures:
+
+                    f.write(str(figure))  # writes to the file
+                    f.write(" ")
+                f.close()  # closes the file
+                print("Goodbye!")
+                break
+            else:
+                print("**Error**")
+                print("Please enter a valid menu choice")
+
+
+def menu_screen():
+    print(15 * "-", "Menu", 15 * "-")
+    print("1. Add a figure to the collection")
+    print("2. Delete a figure from the collection ")
+    print("3. Sort the figures")
+    print("4. Display the figure list")
+    print("5. Search for a figure")
+    print("6. Exit the program")
+    print(30 * '-')
+
+
+def add_figure(): # adds a figure to the list
+    print("**CAUTION** Names are case sensitive")
+    figure_type = input("Please enter the TYPE of the figure you would like to add to the collection >> ")
+    figure_name = input("Please enter the NAME of figure it is >> ")
+    figure_time = datetime.datetime.now()
+    figures.append(Figure(figure_type, figure_name, figure_time))
+    print("The figure has been added to your collection")
+    for figure in figures:
+        print(figure)
+
+
+def delete_figure():
+    target = input("Please enter the NAME of the figure you would like to delete >> ")
+    for figure in figures:  # first the program has to search to see if the figure is in the collection
+        if figure.name == target:
+            print("Found it!")
+            print(figure.type, figure.name)
+            figures.remove(figure) # then the program deletes it
+            return
+    print("Figure Not Found")  # This appears if the figure does not exist
+    return
+
+
+def sort_figure():
+    print("How would you like to sort your list?")
+    print(15 * "-", "Menu", 15 * "-")
+    print("1. Alphabetically")
+    print("2. Reverse Alphabetically ")
+    print("3. Time and Date Added - Latest to Earliest")
+    print("4. Time and Date Added - Earliest to Latest")
+    while True:
+        try:
+            print(" ")
+            choice = int(input("Please make a selection >> "))
+        except ValueError:
+            print("**Error**")
+            print("Please enter a valid menu choice")
+        else:
+            if choice == 1:
+                print("Sorting Alphabetically")
+                figures.sort()
+                print("Sorted!")
+                return
+            elif choice == 2:
+                print("Sorting Reverse Alphabetically")
+                figures.sort(reverse=True)
+                print("Sorted!")
+                return
+            elif choice == 3:
+                print("Sorting by Time and Date - Latest to Earliest")
+                figures.sort(key=lambda figures: figures.time)
+                print("Sorted!")
+                return
+            elif choice == 4:
+                print("Sorting by Time and Date - Earliest to Earliest")
+                figures.sort(key=lambda figures: figures.time, reverse=True)
+                print("Sorted!")
+                return
+
+
+def display_figure():
+    for figure in figures:
+        print(figure)
+
+
+def search_figure():
+    target = input("Please enter the NAME of the figure you would like to look for >> ")
+    for figure in figures:
+        if figure.name == target:
+            print("Found it!")
+            print(figure.type, figure.name)
+            return
+    print("Figure Not Found")
+    return
+
+
+def main():
+    global f
+    f = open("FigureList", 'w+')  # opens a new text file to have information printed to it
+    print("Welcome to the Figure Collection Program!")
+    global figures
+    figures = []
+    menu_choice()
+
+
+if __name__ == "__main__":
+    main()
