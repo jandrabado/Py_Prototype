@@ -8,4 +8,6 @@
 # A new IDLE window should open with the code in it
 # Click on 'Run' then 'Run Module'
 # You will be returned to the Shell with the program running
+# The created file will be in the same folder that file1 is in
+# You can open it with notepad and it will be legible and printable
 
